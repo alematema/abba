@@ -96,7 +96,6 @@ public class ABBA {
 
             if (combination % 2 == 0) {
                 binaryCombination = reverse(binaryCombination);
-                initialSB = new StringBuilder(initial);
                 if (tryCombination(binaryCombination)) {
                     describeMatchingCombination(binaryCombination, initial, target);
                     abba = "Possible";
@@ -116,8 +115,6 @@ public class ABBA {
 
         int targetLength = target.length();
         int initialLength = initial.length();
-        //long totalOfCombinations = (long) Math.pow(2, targetLength - initialLength);
-
         long start = 0;
         if ((totalOfCombinations / 2) - 2 >= 0) {
             start = (totalOfCombinations / 2) - 2;
