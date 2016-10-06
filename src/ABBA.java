@@ -45,7 +45,7 @@ public class ABBA {
             return possibleOrImpossible;
         }
 
-        possibleOrImpossible = canObtainUsingBruteForce(initial, target);// O(2^n)
+        possibleOrImpossible = canObtainByUsingBruteForce(initial, target);// O(2^n)
         
         possibleOrImpossible = possibleOrImpossible.concat(" to obtain  " + target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000  + " ms");
         
@@ -57,7 +57,7 @@ public class ABBA {
      * Complexidade = O(2^n) Onde n = target.length - initial.lenght
      *
      */
-    private String canObtainUsingBruteForce(String initial, String target) {
+    private String canObtainByUsingBruteForce(String initial, String target) {
 
         String abba = "Impossible";
 
