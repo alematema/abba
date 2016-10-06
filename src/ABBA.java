@@ -38,12 +38,18 @@ public class ABBA {
     public String canObtain(String initial, String target) {
 
         long init = System.nanoTime();
+        
+        String possibleOrImpossible = "Impossible to obtain "+  target + " from " + initial;
 
         if (initial.length() >= target.length()) {
-            return "Impossible";
+            return possibleOrImpossible;
         }
 
-        return bruteForce(initial, target) + " " + (System.nanoTime() - init) / 1000000; // O(2^n)
+        possibleOrImpossible = canObtainUsingBruteForce(initial, target);// O(2^n)
+        
+        possibleOrImpossible = possibleOrImpossible.concat(" to obtain  " + target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000  + " ms");
+        
+        return possibleOrImpossible;
 
     }
 
@@ -51,7 +57,7 @@ public class ABBA {
      * Complexidade = O(2^n) Onde n = target.length - initial.lenght
      *
      */
-    private String bruteForce(String initial, String target) {
+    private String canObtainUsingBruteForce(String initial, String target) {
 
         String abba = "Impossible";
 
