@@ -257,7 +257,7 @@ public class ABBA {
         System.out.println(abba.canObtain("A", "ABBA"));
         System.out.println(abba.canObtain("B", "ABBA"));
         
-        System.out.println("\n\n\n took " + (System.nanoTime()-init)/1000);
+        System.out.println("\n\n\ntook " + (System.nanoTime()-init)/1000);
 
     }
 
