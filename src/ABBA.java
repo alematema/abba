@@ -21,14 +21,12 @@ import java.util.logging.Logger;
 public class ABBA {
 
     FileWriter out;
-    FileWriter fileWriter;
     Scanner reader;
     private String report = "report.txt";
 
     public ABBA() {
         try {
             this.out = new FileWriter(report);
-            fileWriter = new FileWriter("zeroes_report.txt");
         } catch (IOException ex) {
             Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,107 +71,7 @@ public class ABBA {
         return abba;
 
     }
-
-    public char[] reverse(char[] chars) {
-
-        int length = chars.length;
-
-        char[] reversed = Arrays.copyOf(chars, length);
-
-        for (int i = 0; i < length; i++) {
-            reversed[i] = chars[length - i - 1];
-        }
-
-        return reversed;
-    }
-
-    public char[] completeLeftZeroes(char[] binary, int maxLength) {
-
-        char[] completed = Arrays.copyOf(binary, maxLength);
-
-        for (int i = 0; i < maxLength - binary.length; i++) {
-            completed[i] = '0';
-        }
-        int j = 0;
-        for (int i = maxLength - binary.length; i < maxLength; i++) {
-            completed[i] = binary[j++];
-        }
-
-//        try {
-//            fileWriter.write("\n" + new String(binary));
-//            fileWriter.write("\n" + new String(completed));
-//            fileWriter.flush();
-//        } catch (IOException ex) {
-//            Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-
-        return completed;
-
-    }
-
-    public boolean tryCombination(char[] combination, StringBuilder initial, String target, long actual, long total) {
-
-        for (char move : combination) {
-            if (move == '0') {
-                doMoveOne(initial);
-            } else {
-                doMoveTwo(initial);
-            }
-        }
-
-        if (initial.toString().equals(target)) {
-
-//            try {
-//                out.write("\n\t" + String.format("[%tT]", Calendar.getInstance()) + " : tryied combination " + new String(combination) + " : resulted TRUE : " + "[ " + actual + " / " + total + " ] ");
-//                out.flush();
-//            } catch (IOException ex) {
-//                Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-
-            return Boolean.TRUE;
-
-        } else {
-
-            try {
-                out.write("\n\t" + String.format("[%tT]", Calendar.getInstance()) + " : tryied combination " + new String(combination) + " : resulted FALSE : " + "[ " + actual + " / " + total + " ] ");
-                out.flush();
-            } catch (IOException ex) {
-                Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            return Boolean.FALSE;
-        }
-    }
-
-    public boolean tryCombination(char[] combination, StringBuilder initial, String target) {
-
-        for (char move : combination) {
-            if (move == '0') {
-                doMoveOne(initial);
-            } else {
-                doMoveTwo(initial);
-            }
-        }
-
-        if (initial.toString().equals(target)) {
-            System.out.println("\n\ttryied combination " + new String(combination) + " resulted : TRUE");
-            return Boolean.TRUE;
-        } else {
-            System.out.println("\n\ttryied combination " + new String(combination) + " resulted : FALSE");
-            return Boolean.FALSE;
-        }
-
-    }
-
-    public void doMoveOne(StringBuilder initial) {
-        initial.append("A");
-    }
-
-    private void doMoveTwo(StringBuilder initialSB) {
-        initialSB.reverse().append("B");
-    }
-
+    
     private String checkFirsHalf(String initial, String target) {
 
         String abba = "Impossible";
@@ -186,7 +84,7 @@ public class ABBA {
 
             StringBuilder initialSB = new StringBuilder(initial);
 
-            if (tryCombination(binary, initialSB, target.intern(), combination, totalOfCombinations)) {
+            if (tryCombination(binary, initialSB, target.intern(),totalOfCombinations)) {
                 abba = "Possible";
                 describeMatchingCombination(binary, initial, target);
                 break;
@@ -195,7 +93,7 @@ public class ABBA {
             if (combination % 2 == 0) {
                 binary = reverse(binary);
                 initialSB = new StringBuilder(initial);
-                if (tryCombination(binary, initialSB, target, combination, totalOfCombinations)) {
+                if (tryCombination(binary, initialSB, target, totalOfCombinations)) {
                     describeMatchingCombination(binary, initial, target);
                     abba = "Possible";
                     break;
@@ -227,7 +125,7 @@ public class ABBA {
             StringBuilder initialSB = new StringBuilder(initial);
             binary = completeLeftZeroes(binary, targetLength - initialLength);
 
-            if (tryCombination(binary, initialSB, target, combination, (totalOfCombinations / 2))) {
+            if (tryCombination(binary, initialSB, target,(totalOfCombinations / 2))) {
                 abba = "Possible";
                 describeMatchingCombination(binary, initial, target);
                 break;
@@ -235,6 +133,65 @@ public class ABBA {
         }
         return abba;
     }
+
+    public char[] reverse(char[] chars) {
+
+        int length = chars.length;
+
+        char[] reversed = Arrays.copyOf(chars, length);
+
+        for (int i = 0; i < length; i++) {
+            reversed[i] = chars[length - i - 1];
+        }
+
+        return reversed;
+    }
+
+    public char[] completeLeftZeroes(char[] binary, int maxLength) {
+
+        char[] completed = Arrays.copyOf(binary, maxLength);
+
+        for (int i = 0; i < maxLength - binary.length; i++) {
+            completed[i] = '0';
+        }
+        int j = 0;
+        for (int i = maxLength - binary.length; i < maxLength; i++) {
+            completed[i] = binary[j++];
+        }
+
+        return completed;
+
+    }
+
+    public boolean tryCombination(char[] combination, StringBuilder initial, String target, long total) {
+
+        for (char move : combination) {
+            if (move == '0') {
+                doMoveOne(initial);
+            } else {
+                doMoveTwo(initial);
+            }
+        }
+
+        if (initial.toString().equals(target)) {
+
+            return Boolean.TRUE;
+
+        } else {
+
+            return Boolean.FALSE;
+        }
+    }
+
+    public void doMoveOne(StringBuilder initial) {
+        initial.append("A");
+    }
+
+    private void doMoveTwo(StringBuilder initialSB) {
+        initialSB.reverse().append("B");
+    }
+
+    
 
    private void describeMatchingCombination(char[] combination, String init, String target) {
 
@@ -276,33 +233,13 @@ public class ABBA {
         System.out.println("\n\t\t-------------------------------------------------------------------------------------------------------------------------------------------------\n\n");
     }
 
-    public void report() {
-
-        try {
-            reader = new Scanner(new FileInputStream(report));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        while (reader.hasNextLine()) {
-            System.out.println(reader.nextLine());
-        }
-
-        try {
-            reader = new Scanner(new FileInputStream("zeroes_report.txt"));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        while (reader.hasNextLine()) {
-            System.out.println(reader.nextLine());
-        }
-
-        reader.close();
-    }
+   
 
     public static void main(String[] args) {
         ABBA abba = new ABBA();
         System.out.println(abba.canObtain("BBBBABABBBBBBA", "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"));
-        System.out.println(abba.canObtain("AAAAABB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABBBB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("BABAB", "AAAAABABABABABBBBABAAAAAAAA"));
         System.out.println(abba.canObtain("AAAAABABABABABBBBABAAAAAAAA", "AAAAABABABABABBBBABAAAAAAAA"));
         System.out.println(abba.canObtain("AAAAABABABABABBBBABAAAAAAAA", "AAAAABABABABABBBBABAAAAAAAA"));
         System.out.println(abba.canObtain("AAAAABABABABABBBBABAAAAAAA", "AAAAABABABABABBBBABAAAAAAAA"));
