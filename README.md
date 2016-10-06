@@ -1,11 +1,11 @@
 # abba
 This application tells either is possible or not to obtain a given string of characters A and B, from another string of characters A and B, through only two basic operations on initial string s. Uses brute force for accomplish the task. Has O(2^n), where n = target.length - initial.lenght. 
 
-#The allowed operations on initial string are <br>
+#The two allowed operations on initial string are <br>
  	*  adding an A to the end of the string <br>
  	*  reversing string and adding B to string's end
 
-# If is possible obtain target string from the initial, then the application describes how operates on initial string to obtain the target string , as follows :<br>
+# If is possible to obtain the target string from the initial, then the application describes the sequence of operations on initial string that produces the target, as follows :<br>
 
  	 initial string : "BBBBABABBBBBBA"   <br>
 	 target string : "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"
