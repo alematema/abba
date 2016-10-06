@@ -17,9 +17,13 @@ import java.util.logging.Logger;
  */
 public class ABBA {
 
-    FileWriter out;
-    Scanner reader;
+    private FileWriter out;
+    private Scanner reader;
     private String report = "report.txt";
+    private String initial;
+    private String target;
+    private StringBuilder initialSB = new StringBuilder();
+    private long totalOfCombinations;
 
     public ABBA() {
         try {
@@ -32,19 +36,19 @@ public class ABBA {
     public String canObtain(String initial, String target) {
 
         long init = System.nanoTime();
-        
+
         System.out.println("\n\n=======================================================================================================================================\nTrying   to    obtain " + target + " from " + initial);
-        
-        String possibleOrImpossible = "Impossible to obtain "+  target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000  +" ms\n=======================================================================================================================================";
+
+        String possibleOrImpossible = "Impossible to obtain " + target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000 + " ms\n=======================================================================================================================================";
 
         if (initial.length() >= target.length()) {
             return possibleOrImpossible;
         }
 
-        possibleOrImpossible = canObtainByUsingBruteForce(initial, target);// O(2^n)
-        
-        possibleOrImpossible = possibleOrImpossible.concat(" to obtain  " + target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000  + " ms\n=======================================================================================================================================");
-        
+        possibleOrImpossible = tryObtainTargetFromInitialByUsingBruteForce(initial, target);// O(2^n)
+
+        possibleOrImpossible = possibleOrImpossible.concat(" to obtain  " + target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000 + " ms\n=======================================================================================================================================");
+
         return possibleOrImpossible;
 
     }
@@ -53,45 +57,48 @@ public class ABBA {
      * Complexidade = O(2^n) Onde n = target.length - initial.lenght
      *
      */
-    private String canObtainByUsingBruteForce(String initial, String target) {
+    private String tryObtainTargetFromInitialByUsingBruteForce(String initial, String target) {
 
-        String abba = "Impossible";        
+        this.initial = initial;
+        this.target = target;
+        this.totalOfCombinations = (long) Math.pow(2, target.length() - initial.length());
 
-        abba = checkFirsHalf(initial, target);
+        initialSB = new StringBuilder(initial);
+
+        String abba = "Impossible";
+
+        abba = checkFirsHalf();
 
         if (abba.equals("Impossible")) {
 
-            abba = checkSecondHalf(initial, target);
+            abba = checkSecondHalf();
 
         }
 
         return abba;
 
     }
-    
-    private String checkFirsHalf(String initial, String target) {
+
+
+    private String checkFirsHalf() {
 
         String abba = "Impossible";
-        
-        long totalOfCombinations = (long) Math.pow(2, target.length() - initial.length());
 
         for (long combination = totalOfCombinations - 1; combination >= totalOfCombinations / 2; combination--) {
 
-            char[] binary = Long.toBinaryString(combination).toCharArray();
+            char[] binaryCombination = Long.toBinaryString(combination).toCharArray();
 
-            StringBuilder initialSB = new StringBuilder(initial);
-
-            if (tryCombination(binary, initialSB, target.intern(),totalOfCombinations)) {
+            if (tryCombination(binaryCombination)) {
                 abba = "Possible";
-                describeMatchingCombination(binary, initial, target);
+                describeMatchingCombination(binaryCombination, initial, target);
                 break;
             }
 
             if (combination % 2 == 0) {
-                binary = reverse(binary);
+                binaryCombination = reverse(binaryCombination);
                 initialSB = new StringBuilder(initial);
-                if (tryCombination(binary, initialSB, target, totalOfCombinations)) {
-                    describeMatchingCombination(binary, initial, target);
+                if (tryCombination(binaryCombination)) {
+                    describeMatchingCombination(binaryCombination, initial, target);
                     abba = "Possible";
                     break;
                 }
@@ -103,13 +110,13 @@ public class ABBA {
 
     }
 
-    private String checkSecondHalf(String initial, String target) {
+    private String checkSecondHalf() {
 
         String abba = "Impossible";
 
         int targetLength = target.length();
         int initialLength = initial.length();
-        long totalOfCombinations = (long) Math.pow(2, targetLength - initialLength);
+        //long totalOfCombinations = (long) Math.pow(2, targetLength - initialLength);
 
         long start = 0;
         if ((totalOfCombinations / 2) - 2 >= 0) {
@@ -119,10 +126,9 @@ public class ABBA {
         for (long combination = start; combination >= 0; combination -= 2) {
 
             char[] binary = Long.toBinaryString(combination).toCharArray();
-            StringBuilder initialSB = new StringBuilder(initial);
             binary = completeLeftZeroes(binary, targetLength - initialLength);
 
-            if (tryCombination(binary, initialSB, target,(totalOfCombinations / 2))) {
+            if (tryCombination(binary)) {
                 abba = "Possible";
                 describeMatchingCombination(binary, initial, target);
                 break;
@@ -160,24 +166,23 @@ public class ABBA {
 
     }
 
-    public boolean tryCombination(char[] combination, StringBuilder initial, String target, long total) {
+    public boolean tryCombination(char[] combination) {
 
         for (char move : combination) {
             if (move == '0') {
-                doMoveOne(initial);
+                doMoveOne(initialSB);
             } else {
-                doMoveTwo(initial);
+                doMoveTwo(initialSB);
             }
         }
 
-        if (initial.toString().equals(target)) {
+        boolean matches = initialSB.toString().equals(target);
 
-            return Boolean.TRUE;
+        initialSB.delete(0, initialSB.length());
+        initialSB.append(this.initial);
 
-        } else {
+        return matches;
 
-            return Boolean.FALSE;
-        }
     }
 
     public void doMoveOne(StringBuilder initial) {
@@ -188,9 +193,7 @@ public class ABBA {
         initialSB.reverse().append("B");
     }
 
-    
-
-   private void describeMatchingCombination(char[] combination, String init, String target) {
+    private void describeMatchingCombination(char[] combination, String init, String target) {
 
         //      report();
         StringBuilder initial = new StringBuilder(init);
@@ -230,10 +233,12 @@ public class ABBA {
         System.out.println("\n\t\t-------------------------------------------------------------------------------------------------------------------------------------------------\n\n");
     }
 
-   
-
     public static void main(String[] args) {
+
         ABBA abba = new ABBA();
+        
+        long init = System.nanoTime();
+        
         System.out.println(abba.canObtain("BBBBABABBBBBBA", "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"));
         System.out.println(abba.canObtain("AAAAABBBB", "AAAAABABABABABBBBABAAAAAAAA"));
         System.out.println(abba.canObtain("BABAB", "AAAAABABABABABBBBABAAAAAAAA"));
@@ -254,7 +259,9 @@ public class ABBA {
         System.out.println(abba.canObtain("BBBA", "AAAAABABABABABBBBABAAAAAAAA"));
         System.out.println(abba.canObtain("A", "ABBA"));
         System.out.println(abba.canObtain("B", "ABBA"));
-       
+        
+        System.out.println("\n\n\n took " + (System.nanoTime()-init)/1000);
+
     }
 
 }
