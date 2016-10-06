@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -39,7 +38,9 @@ public class ABBA {
 
         long init = System.nanoTime();
         
-        String possibleOrImpossible = "Impossible to obtain "+  target + " from " + initial;
+        System.out.println("\n\n=======================================================================================================================================\nTrying   to    obtain " + target + " from " + initial);
+        
+        String possibleOrImpossible = "\tImpossible to obtain "+  target + " from " + initial;
 
         if (initial.length() >= target.length()) {
             return possibleOrImpossible;
@@ -47,7 +48,7 @@ public class ABBA {
 
         possibleOrImpossible = canObtainByUsingBruteForce(initial, target);// O(2^n)
         
-        possibleOrImpossible = possibleOrImpossible.concat(" to obtain  " + target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000  + " ms");
+        possibleOrImpossible = possibleOrImpossible.concat(" to obtain  " + target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000  + " ms\n=======================================================================================================================================");
         
         return possibleOrImpossible;
 
@@ -59,15 +60,13 @@ public class ABBA {
      */
     private String canObtainByUsingBruteForce(String initial, String target) {
 
-        String abba = "Impossible";
+        String abba = "Impossible";        
 
-        long totalOfCombinations = (long) Math.pow(2, target.length() - initial.length());
-
-        abba = checkFirsHalf(initial, target, totalOfCombinations);
+        abba = checkFirsHalf(initial, target);
 
         if (abba.equals("Impossible")) {
 
-            abba = checkSecondHalf(initial, target, totalOfCombinations);
+            abba = checkSecondHalf(initial, target);
 
         }
 
@@ -100,13 +99,13 @@ public class ABBA {
             completed[i] = binary[j++];
         }
 
-        try {
-            fileWriter.write("\n" + new String(binary));
-            fileWriter.write("\n" + new String(completed));
-            fileWriter.flush();
-        } catch (IOException ex) {
-            Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            fileWriter.write("\n" + new String(binary));
+//            fileWriter.write("\n" + new String(completed));
+//            fileWriter.flush();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //        
 
         return completed;
@@ -125,12 +124,12 @@ public class ABBA {
 
         if (initial.toString().equals(target)) {
 
-            try {
-                out.write("\n\t" + String.format("[%tT]", Calendar.getInstance()) + " : tryied combination " + new String(combination) + " : resulted TRUE : " + "[ " + actual + " / " + total + " ] ");
-                out.flush();
-            } catch (IOException ex) {
-                Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                out.write("\n\t" + String.format("[%tT]", Calendar.getInstance()) + " : tryied combination " + new String(combination) + " : resulted TRUE : " + "[ " + actual + " / " + total + " ] ");
+//                out.flush();
+//            } catch (IOException ex) {
+//                Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 
             return Boolean.TRUE;
 
@@ -175,9 +174,11 @@ public class ABBA {
         initialSB.reverse().append("B");
     }
 
-    private String checkFirsHalf(String initial, String target, long totalOfCombinations) {
+    private String checkFirsHalf(String initial, String target) {
 
         String abba = "Impossible";
+        
+        long totalOfCombinations = (long) Math.pow(2, target.length() - initial.length());
 
         for (long combination = totalOfCombinations - 1; combination >= totalOfCombinations / 2; combination--) {
 
@@ -207,12 +208,13 @@ public class ABBA {
 
     }
 
-    private String checkSecondHalf(String initial, String target, long totalOfCombinations) {
+    private String checkSecondHalf(String initial, String target) {
 
         String abba = "Impossible";
 
         int targetLength = target.length();
         int initialLength = initial.length();
+        long totalOfCombinations = (long) Math.pow(2, targetLength - initialLength);
 
         long start = 0;
         if ((totalOfCombinations / 2) - 2 >= 0) {
@@ -238,9 +240,9 @@ public class ABBA {
 
         //      report();
         StringBuilder initial = new StringBuilder(init);
-        System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        System.out.println("describing operation " + new String(combination) + " on initial string " + init + " to get target string " + target + " -------------------------------------");
-        System.out.println("\n\t0/1 \t\tmeaning\t\t\t\tresults\t\t\ttarget\n");
+        System.out.println("\n\t\t-------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        System.out.println("\t\tdescribing operation " + new String(combination) + " on initial string " + init + " to obtain target string " + target + " -------------------------------------");
+        System.out.println("\n\t\t0/1 \t\tmeaning\t\t\t\tresults\t\t\ttarget\n");
         try {
             out.write("\n-------------------------------------------------------------------------------------------------------------------------------------------------\n");
             out.write("describing operation " + new String(combination) + " on initial string " + init + " to get target string " + target + " -------------------------------------");
@@ -252,9 +254,9 @@ public class ABBA {
         for (char move : combination) {
             if (move == '0') {
                 doMoveOne(initial);
-                System.out.println("\t 0" + "\tadds  A to the end of the string \t" + initial + "\t\t\t" + target);
+                System.out.println("\t\t 0" + "\tadds  A to the end of the string \t" + initial + "\t\t\t" + target);
                 try {
-                    out.write("\t 0" + "\tadds  A to the end of the string \t" + initial + "\t" + target);
+                    out.write("\t\t 0" + "\tadds  A to the end of the string \t" + initial + "\t" + target);
                     out.flush();
 
                 } catch (IOException ex) {
@@ -262,16 +264,16 @@ public class ABBA {
                 }
             } else {
                 doMoveTwo(initial);
-                System.out.println("\t 1" + "\treverses s and adds B to  s' end  \t" + initial + "\t\t\t" + target);
+                System.out.println("\t\t 1" + "\treverses s and adds B to  s' end  \t" + initial + "\t\t\t" + target);
                 try {
-                    out.write("\t 1" + "\treverses s and adds B to  s' end  \t" + initial + "\t" + target);
+                    out.write("\t\t 1" + "\treverses s and adds B to  s' end  \t" + initial + "\t" + target);
                     out.flush();
                 } catch (IOException ex) {
                     Logger.getLogger(ABBA.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
-        System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------\n\n");
+        System.out.println("\n\t\t-------------------------------------------------------------------------------------------------------------------------------------------------\n\n");
     }
 
     public void report() {
