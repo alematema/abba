@@ -109,7 +109,7 @@ public class ABBA {
 
     }
 
-    private String checkSecondHalf() {
+   private String checkSecondHalf() {
 
         String abba = "Impossible";
 
@@ -122,12 +122,12 @@ public class ABBA {
 
         for (long combination = start; combination >= 0; combination -= 2) {
 
-            char[] binary = Long.toBinaryString(combination).toCharArray();
-            binary = completeLeftZeroes(binary, targetLength - initialLength);
+            char[] binaryCombination = Long.toBinaryString(combination).toCharArray();
+            binaryCombination = completeLeftZeroes(binaryCombination, targetLength - initialLength);
 
-            if (tryCombination(binary)) {
+            if (tryCombination(binaryCombination)) {
                 abba = "Possible";
-                describeMatchingCombination(binary, initial, target);
+                describeMatchingCombination(binaryCombination, initial, target);
                 break;
             }
         }
