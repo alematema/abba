@@ -40,7 +40,7 @@ public class ABBA {
         
         System.out.println("\n\n=======================================================================================================================================\nTrying   to    obtain " + target + " from " + initial);
         
-        String possibleOrImpossible = "\tImpossible to obtain "+  target + " from " + initial;
+        String possibleOrImpossible = "Impossible to obtain "+  target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000  +" ms\n=======================================================================================================================================";
 
         if (initial.length() >= target.length()) {
             return possibleOrImpossible;
@@ -303,6 +303,15 @@ public class ABBA {
         ABBA abba = new ABBA();
         System.out.println(abba.canObtain("BBBBABABBBBBBA", "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"));
         System.out.println(abba.canObtain("AAAAABB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABABABABBBBABAAAAAAAA", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABABABABBBBABAAAAAAAA", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABABABABBBBABAAAAAAA", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABABABABBBBABAAAAAA", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABABABABBBBABAAAAAAB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABABABABBBBABABB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAABBBAAABABABABABAB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABBBBBBBABABABABAB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABABABBBB", "AAAAABABABABABBBBABAAAAAAAA"));
        
     }
 
