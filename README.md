@@ -11,7 +11,7 @@ This application tells either is possible or not to obtain a given string of cha
 	 target string : "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"
   
   
-# The applications outputs the following :
+# The application outputs the following :
   
   -------------------------------------------------------------------------------------------------------------------------------------------------
 
