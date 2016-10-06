@@ -311,7 +311,15 @@ public class ABBA {
         System.out.println(abba.canObtain("AAAAABABABABABBBBABABB", "AAAAABABABABABBBBABAAAAAAAA"));
         System.out.println(abba.canObtain("AAABBBAAABABABABABAB", "AAAAABABABABABBBBABAAAAAAAA"));
         System.out.println(abba.canObtain("AAAAABBBBBBBABABABABAB", "AAAAABABABABABBBBABAAAAAAAA"));
-        System.out.println(abba.canObtain("AAAAABABABABBBB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABAB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABBBB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABAB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAAABABB", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAAA", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("AAA", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("BBBA", "AAAAABABABABABBBBABAAAAAAAA"));
+        System.out.println(abba.canObtain("A", "ABBA"));
+        System.out.println(abba.canObtain("B", "ABBA"));
        
     }
 
