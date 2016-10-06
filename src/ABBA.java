@@ -228,103 +228,7 @@ public class ABBA {
         return abba;
     }
 
-    public String reverseVowels(String s) {
-//        Example 1:
-//        Given s = "hello", return "holle".Example 2:
-//        Given s = "leetcode", return "leotcede".
-        StringBuilder sb = new StringBuilder(s);
-        int left = 0;
-        int right = sb.length() - 1;
-
-        while (left <= right) {
-
-            if (!(sb.charAt(left) == 'a' || sb.charAt(left) == 'e'
-                    || sb.charAt(left) == 'i' || sb.charAt(left) == 'o'
-                    || sb.charAt(left) == 'u' || sb.charAt(left) == 'A'
-                    || sb.charAt(left) == 'E' || sb.charAt(left) == 'I'
-                    || sb.charAt(left) == 'O' || sb.charAt(left) == 'U')) {
-
-                left++;
-                continue;
-
-            } else {// achou alguma vogal em left
-
-                while (!(sb.charAt(right) == 'a' || sb.charAt(right) == 'e'
-                        || sb.charAt(right) == 'i' || sb.charAt(right) == 'o'
-                        || sb.charAt(right) == 'u' || sb.charAt(right) == 'A'
-                        || sb.charAt(right) == 'E' || sb.charAt(right) == 'I'
-                        || sb.charAt(right) == 'O' || sb.charAt(right) == 'U')) {
-                    right--;
-                }
-            }
-
-            //left and rigth point to vowels
-            char aux = sb.charAt(left);
-            //swaps according to ascCode table
-            sb.setCharAt(left, sb.charAt(right));
-            sb.setCharAt(right, aux);
-
-            left++;
-            right--;
-
-        }
-
-        return sb.toString();
-
-    }
-
-    public String test(String s) {
-
-        StringBuilder sb = new StringBuilder(s);
-
-        int[] positions = new int[s.length()];
-
-        int left = 0;
-        int right = s.length() - 1;
-
-        System.out.println("size=" + s.length());
-        int pos = 0;
-        while (left < right) {
-
-            System.out.println("left=" + left + "=" + s.charAt(left) + "  right=" + right + "=" + s.charAt(right));
-
-            if ((sb.charAt(left) == 'a' || sb.charAt(left) == 'e'
-                    || sb.charAt(left) == 'i' || sb.charAt(left) == 'o'
-                    || sb.charAt(left) == 'u' || sb.charAt(left) == 'A'
-                    || sb.charAt(left) == 'E' || sb.charAt(left) == 'I'
-                    || sb.charAt(left) == 'O' || sb.charAt(left) == 'U')) {
-                positions[pos++] = left;
-            }
-
-            if (sb.charAt(right) == 'a' || sb.charAt(right) == 'e'
-                    || sb.charAt(right) == 'i' || sb.charAt(right) == 'o'
-                    || sb.charAt(right) == 'u' || sb.charAt(right) == 'A'
-                    || sb.charAt(right) == 'E' || sb.charAt(right) == 'I'
-                    || sb.charAt(right) == 'O' || sb.charAt(right) == 'U') {
-                positions[pos++] = right;
-            }
-
-            left++;
-            right--;
-        }
-
-        left = 0;
-        right = pos - 1;
-//        for(int i=0;i<pos;i++){
-//            System.out.println("vowels " + positions[i]);
-//        }
-
-        while (left < pos) {
-            System.out.println("\nleft=" + left + "=" + positions[left] + "  right=" + right + "=" + positions[right]);
-            left++;
-            pos--;
-        }
-        ;
-
-        return null;
-    }
-
-    private void describeMatchingCombination(char[] combination, String init, String target) {
+   private void describeMatchingCombination(char[] combination, String init, String target) {
 
         //      report();
         StringBuilder initial = new StringBuilder(init);
@@ -390,20 +294,8 @@ public class ABBA {
     public static void main(String[] args) {
         ABBA abba = new ABBA();
         System.out.println(abba.canObtain("BBBBABABBBBBBA", "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"));
-//          System.out.println(abba.canObtain("BBBBABABBBBBBA", "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"));
-
-        //System.out.println(abba.canObtain("AAAAABB", "AAAAABABABABABBBBABAAAAAAAA"));
-        //abba.report();
-        // System.out.println(abba.canObtain("ABBAABABBBBBAB", "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"));
-
-//        System.out.println(abba.canObtain("BBBBAAAAAAABBBBBB", "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"));
-//        System.out.println("0123456789ABCDEFGHIJKLMNOPQRSTUVWXZ");
-//        System.out.println(new StringBuilder("0123456789ABCDEFGHIJKLMNOPQRSTUVWXZ").reverse().toString());
-//        System.out.println(abba.reverseVowels("A man, a plan, a canal: Panama"));
-//
-//        long init = System.nanoTime();
-//
-//        abba.test("01e23456789abcde");
+        System.out.println(abba.canObtain("AAAAABB", "AAAAABABABABABBBBABAAAAAAAA"));
+       
     }
 
 }
