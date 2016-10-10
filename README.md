@@ -2,8 +2,8 @@
 This application tells either is possible or not to obtain a given string of characters A and B, from another string of characters A and B, through only two basic operations on initial string s.<br> Uses brute force to accomplish the task.<br> Has O(2^n), where n = target.length - initial.lenght. 
 
 #The two allowed operations on initial string are <br>
- 	*  adding an A to the end of the string - 0
- 	*  reversing string and adding B to string's end - 1
+ 	*  adding an A to the end of the string <=> 0
+ 	*  reversing string and adding B to string's end <=> 1
 
 # If it is possible obtaining the target string from the initial, then the application describes the sequence of operations on initial string that produces the target, as follows :<br>
 
