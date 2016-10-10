@@ -5,7 +5,7 @@ This application tells either is possible or not to obtain a given string of cha
  	*  adding an A to the end of the string <br>
  	*  reversing string and adding B to string's end
 
-# If is possible to obtain the target string from the initial, then the application describes the sequence of operations on initial string that produces the target, as follows :<br>
+# If it is possible obtaining the target string from the initial, then the application describes the sequence of operations on initial string that produces the target, as follows :<br>
 
  	 initial string : "BBBBABABBBBBBA"   <br>
 	 target string : "BBBBABABBABBBBBBABABBBBBBBBABAABBBAA"
