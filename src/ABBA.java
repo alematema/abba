@@ -41,8 +41,27 @@ public class ABBA {
 
         String possibleOrImpossible = "Impossible to obtain " + target + " from " + initial + "\ttook " + (System.nanoTime() - init) / 1000000 + " ms\n=======================================================================================================================================";
 
+        if (initial == null || target == null) {
+            return possibleOrImpossible;
+        }
+        
         if (initial.length() >= target.length()) {
             return possibleOrImpossible;
+        }
+        
+        initial = initial.toUpperCase();
+        target  = target.toUpperCase();
+
+        for (int i = 0; i < target.length(); i++) {
+            if (target.charAt(i) != 'A' && target.charAt(i) != 'B') {
+                return possibleOrImpossible;
+            }
+        }
+
+        for (int i = 0; i < initial.length(); i++) {
+            if (initial.charAt(i) != 'A' && initial.charAt(i) != 'B') {
+                return possibleOrImpossible;
+            }
         }
 
         possibleOrImpossible = tryObtainTargetFromInitialByUsingBruteForce(initial, target);// O(2^n)
